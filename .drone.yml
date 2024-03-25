@@ -8,13 +8,13 @@ platform:
   os: linux
   arch: arm64
 
-## 克隆代码时，depth=1 更快速
+## 克隆代码时，depth=1只获取最后一次提交，速度更快
 clone:
   depth: 1
 
 steps:
   - name: build # 流水线名称
-    image: node:20.6.1
+    image: node:lts-alpine3.19
     commands:
       - npm config set registry https://registry.npmmirror.com
       - npm install
@@ -28,6 +28,7 @@ steps:
     settings:
       context: /drone/src
     commands: # 定义在Docker容器中执行的shell命令
+      # 第一次执行注释 stop 跟 remove
       - echo stop container
       - docker stop `docker ps -a | grep drone-test-vue | awk '{print $1}'` 
       - echo remove image
@@ -37,7 +38,8 @@ steps:
       - echo run container
       - docker run -p 8080:80 --name drone-test-vue -d drone-test-vue
 
-volumes: # 定义流水线挂载目录，用于共享数据的
+# 定义流水线挂载目录
+volumes: 
   - name: docker
     host:
       path: /var/run/docker.sock

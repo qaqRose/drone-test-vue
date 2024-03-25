@@ -14,7 +14,7 @@ clone:
 
 steps:
   - name: build # 流水线名称
-    image: node:lts-alpine3.19
+    image: node:20.11.1-alpine3.19
     commands:
       - npm config set registry https://registry.npmmirror.com
       - npm install

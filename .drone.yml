@@ -29,10 +29,10 @@ steps:
       context: /drone/src
     commands: # 定义在Docker容器中执行的shell命令
       # 第一次执行注释 stop 跟 remove
-      - echo stop container
-      - docker stop `docker ps -a | grep drone-test-vue | awk '{print $1}'` 
-      - echo remove image
-      - docker rm -f `docker ps -a | grep drone-test-vue | awk '{print $1}'` 
+      # - echo stop container
+      # - docker stop `docker ps -a | grep drone-test-vue | awk '{print $1}'` 
+      # - echo remove image
+      # - docker rm -f `docker ps -a | grep drone-test-vue | awk '{print $1}'` 
       - echo build new images
       - docker build -t drone-test-vue .
       - echo run container
